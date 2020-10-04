@@ -85,6 +85,67 @@
   align-items: center;
 }
 
+.heading hr{
+  background-color: midnightblue;
+  height: 2px;
+  border-style: none;
+  margin-top: 0px;
+}
+.heading h4{
+  font-family: Arial;
+  color: white;
+  margin: 0px;
+  padding: 5px;
+}
+.heading button{
+  border-style: none;
+  border-radius : 0px;
+  background-color: white;
+  color: midnightblue;
+}
+.heading button:hover{
+  border-style: none;
+  border-radius : 0px;
+  background-color: skyblue;
+  color: white;
+}
+
+.addEvent {
+  margin: 0px;
+  border-radius: 5px;
+  background-color: white;
+  padding: 5px 3px;
+  width: 100%;
+}
+
+.addEvent input[type=date]{
+  width: 450px;
+  padding: 8px 20px;
+  margin: 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.addEvent input[type=text]{
+  width: 450px;
+  padding: 8px 20px;
+  margin: 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.addEvent select {
+  width: 450px;
+  padding: 8px 20px;
+  margin: 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 /*NavigationBar*/
 .logo{
   padding: 0px;

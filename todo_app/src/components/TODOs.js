@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Container} from 'react-bootstrap';
+import {Container,Form,Button} from 'react-bootstrap';
 import '../App.css';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -47,6 +47,12 @@ export default class TODOs extends Component{
     constructor(props) {
         super(props);
         this.getEvents = this.getEvents.bind(this);
+        this.onClickEventsTab = this.onClickEventsTab.bind(this);
+        this.onChangeSummary = this.onChangeSummary.bind(this)
+        this.onClickNewEvent = this.onClickNewEvent.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeStartDate = this.onChangeStartDate.bind(this);
+        this.onChangeEndDate = this.onChangeEndDate.bind(this);
         const cookies = new Cookies();
         let token = cookies.get('token');
         this.state = {
@@ -73,13 +79,47 @@ export default class TODOs extends Component{
                     field: 'creator.email'
                 }
             ],
-            emptyEvents: false
+            emptyEvents: false,
+            activeTab: 'events',
+            summary:'',
+            description:'',
+            startDate:'',
+            endDate:''
         }
     }
     componentDidMount() {
         this.getEvents();
     }
-
+    onClickEventsTab() {
+        this.setState({
+            activeTab: 'events'
+        });
+    };
+    onClickNewEvent() {
+        this.setState({
+            activeTab: 'newEvent'
+        });
+    };
+    onChangeSummary(e) {
+        this.setState({
+            summary: e.target.value
+        });
+    }
+    onChangeDescription(e) {
+        this.setState({
+            description: e.target.value
+        });
+    }
+    onChangeStartDate(e) {
+        this.setState({
+            startDate: e.target.value
+        });
+    }
+    onChangeEndDate(e) {
+        this.setState({
+            endDate: e.target.value
+        });
+    }
     getEvents(){
         axios.post("http://localhost:8080/api/events",this.state.token)
             .then(res => {
@@ -100,26 +140,116 @@ export default class TODOs extends Component{
     render() {
         return (
             <div className="todo">
+
                 <Container align="center" style={{paddingTop:'35px', paddingBottom:'35px'}}>
+                    <div align="center" className="heading">
+                        <div className="btn-group" style={{margin: '0px', padding: '0px',width:'100%',height: '35px'}}>
+                            <button className="btn"
+                                    style={
+                                        (this.state.activeTab === 'events' ? {backgroundColor:'midnightblue', color:'white'} : null)
+                                    }
+                                    onClick={this.onClickEventsTab}
+                            >My Events</button>
+                            <button className="btn"
+                                    style={
+                                        (this.state.activeTab === 'newEvent' ? {backgroundColor:'midnightblue', color:'white'} : null)
+                                    }
+                                    onClick={this.onClickNewEvent}
+                            >Add New Event</button>
+                        </div>
+                        <hr/>
+                    </div>
                     {
-                        (this.state.events.length > 0 || this.state.emptyEvents === true ?
-                            <MaterialTable
-                                icons={tableIcons}
-                                title="Upcoming Events"
-                                columns={this.state.eventColumns}
-                                data={this.state.events}
-                                options={{actionsColumnIndex: -1}}
-                            />
-                            :
-                            <div style={{color: 'white'}}>
-                                <Spinner
-                                    as="div"
-                                    animation="border"
-                                    role="status"
-                                    aria-hidden="true"
-                                />
-                                <p>Loading...</p>
-                            </div>)
+                        (this.state.activeTab === 'events' ?
+                                (this.state.events.length > 0 || this.state.emptyEvents === true ?
+                                    <MaterialTable
+                                        icons={tableIcons}
+                                        title="Upcoming Events"
+                                        columns={this.state.eventColumns}
+                                        data={this.state.events}
+                                        options={{actionsColumnIndex: -1}}
+                                    />
+                                    :
+                                    <div style={{color: 'white'}}>
+                                        <Spinner
+                                            as="div"
+                                            animation="border"
+                                            role="status"
+                                            aria-hidden="true"
+                                        />
+                                        <p>Loading...</p>
+                                    </div>)
+                                :
+                            <div className="addEvent" style={{margin: '0px', padding: '20px',width:'100%',height: '300px'}}>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td width="90px">
+                                            <Form.Label className="required">Summary</Form.Label>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                id="summary"
+                                                name="summary"
+                                                value={this.state.summary}
+                                                onChange={this.onChangeSummary}
+                                                required={true}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="90px">
+                                            <Form.Label className="required">Description</Form.Label>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                id="description"
+                                                name="description"
+                                                value={this.state.description}
+                                                onChange={this.onChangeDescription}
+                                                required={true}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <Form.Label className="required">Start Date</Form.Label>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="date"
+                                                id="startDate"
+                                                name="startDate"
+                                                value={this.state.startDate}
+                                                onChange={this.onChangeStartDate}
+                                                required={true}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <Form.Label className="required">End Date</Form.Label>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="date"
+                                                id="endDate"
+                                                name="endDate"
+                                                value={this.state.endDate}
+                                                onChange={this.onChangeEndDate}
+                                                required={true}
+                                            />
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <Container align="center" style={{paddingTop: '10px'}}>
+                                    <Button onClick={this.onClickAddButton}>Add Event</Button>
+                                </Container>
+                            </div>
+                        )
                     }
                 </Container>
             </div>
