@@ -53,6 +53,7 @@ export default class TODOs extends Component{
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeStartDate = this.onChangeStartDate.bind(this);
         this.onChangeEndDate = this.onChangeEndDate.bind(this);
+        this.onClickAddButton = this.onClickAddButton.bind(this);
         const cookies = new Cookies();
         let token = cookies.get('token');
         this.state = {
@@ -133,6 +134,28 @@ export default class TODOs extends Component{
                     this.setState({
                         emptyEvents: true
                     });
+                }
+            });
+    }
+    onClickAddButton(e) {
+        e.preventDefault();
+        let data= {
+            Summary : this.state.summary,
+            Description : this.state.description,
+            StartDate : this.state.startDate,
+            EndDate : this.state.endDate,
+            Token: this.state.token
+        }
+        axios.post('http://localhost:8080/api/add-new-event',data)
+            .then((response)=>{
+                if(response.data.event){
+                    this.setState({
+                        summary : '',
+                        description : '',
+                        startDate : '',
+                        endDate : ''
+                    });
+                    window.location.href = "http://localhost:3000/todos";
                 }
             });
     }

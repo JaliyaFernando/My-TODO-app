@@ -79,24 +79,21 @@ exports.listEvents = (oAuth2Client,token) => {
     return deferred.promise;
 };
 
-exports.addEvent = (oAuth2Client,token) => {
+exports.addEvent = (oAuth2Client,data) => {
     var event = {
-        'summary': 'Google I/O 2015',
-        'location': '800 Howard St., San Francisco, CA 94103',
-        'description': 'A chance to hear more about Google\'s developer products.',
+        'summary': data.Summary,
+        'location': '',
+        'description': data.Description,
         'start': {
-            'dateTime': '2020-10-10T09:00:00-07:00',
+            'dateTime': new Date(data.StartDate),
             'timeZone': 'Asia/Colombo',
         },
         'end': {
-            'dateTime': '2020-10-10T17:00:00-07:00',
+            'dateTime': new Date(data.EndDate),
             'timeZone': 'Asia/Colombo',
         },
         'recurrence': [
             'RRULE:FREQ=DAILY;COUNT=1'
-        ],
-        'attendees': [
-            {'email': 'jaliyalaksirifernando@gmail.com'}
         ],
         'reminders': {
             'useDefault': false,
@@ -107,7 +104,7 @@ exports.addEvent = (oAuth2Client,token) => {
         },
     };
     var deferred = q.defer();
-    oAuth2Client.setCredentials(token);
+    oAuth2Client.setCredentials(data.Token);
 
     const calendar = google.calendar({version: 'v3', auth: oAuth2Client});
     calendar.events.insert({
@@ -119,8 +116,10 @@ exports.addEvent = (oAuth2Client,token) => {
             console.log('There was an error contacting the Calendar service: ' + err);
             deferred.reject(err);
         }
-        console.log('New event created successfully');
-        deferred.resolve(event);
+        else {
+            console.log('New event created successfully');
+            deferred.resolve(event);
+        }
     });
     return deferred.promise;
 };

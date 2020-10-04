@@ -53,10 +53,10 @@ exports.getEvents =  (request, response) => {
 
 exports.addEvent =  (request, response) => {
     console.log("addEvent - start");
-    const token = request.body;
+    const data = request.body;
     GoogleAuthenticationService.createOAuth2Client().then(function (client) {
-        GoogleAuthenticationService.addEvent(client,token).then(function (events) {
-            response.status(200).send({events: events});
+        GoogleAuthenticationService.addEvent(client,data).then(function (event) {
+            response.status(200).send({event: event});
             console.log("addEvent - end");
         }, function (error) {
             response.status(500).send({Error:error});
