@@ -66,5 +66,4 @@ exports.addEvent =  (request, response) => {
         response.status(500).send({Error:error});
         console.log("addEvent - end");
     });
-
 };

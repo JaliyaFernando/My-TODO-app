@@ -57,7 +57,7 @@ exports.listEvents = (oAuth2Client,token) => {
     calendar.events.list({
         calendarId: 'primary',
         timeMin: (new Date()).toISOString(),
-        maxResults: 10,
+        maxResults: 50,
         singleEvents: true,
         orderBy: 'startTime',
     }, (err, res) => {
