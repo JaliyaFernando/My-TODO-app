@@ -1,7 +1,7 @@
 # My TODO README
 
 ## Overview
-My TODO is an application users can view their upcoming events in the Google calendar and to add new events to the user's Google calendar.The application uses Node.js for the back-end and ReactJS for the front-end and use some Google APIs for the authentication and for the Google calendar authorization.
+My TODO is an application users can view their upcoming events in the Google calendar and to add new events to the user's Google calendar.The application use Node.js for the back-end and ReactJS for the front-end and use some Google APIs for the authentication and for the Google calendar and user information authorization.
 
 **Developed by**
 - Fernando K.J.L.   - IT17030304
