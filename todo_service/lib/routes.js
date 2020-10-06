@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const AuthenticationController = require("./controllers/authenticationController");
+const AuthenticationController = require("./controllers/myTODOController");
 
 app.get('/login', AuthenticationController.getAuthUrl);
 app.post('/token', AuthenticationController.getToken);

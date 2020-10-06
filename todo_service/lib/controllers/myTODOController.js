@@ -1,5 +1,5 @@
 'use strict';
-const GoogleAuthenticationService = require("../services/googleAuthenticationService");
+const GoogleAuthenticationService = require("../services/myTODOService");
 
 exports.getAuthUrl =  (request, response) => {
     console.log("getAuthUrl - start");
